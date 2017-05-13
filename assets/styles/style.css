@@ -70,7 +70,8 @@ img {
     margin: 0 5px 5px;
 }
 
-.firstPagejumbo {
+.firstPagejumbo,
+.completedList {
     display: none;
 }
 

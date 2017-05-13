@@ -101,10 +101,10 @@ var ftdl = {
 				$(".member-stats").append(memberHtml);
 			}
 		}
-		$(".completedStats").html("Completed " + '<span class="badge">' + totalCompleted + '</span>');
+		// $(".completedStats").html("Completed " + '<span class="badge">' + totalCompleted + '</span>');
 		$(".completedStats").append('<div id="totalCompleted" class="collapse">');
-		$("#totalCompleted").append(completedHtml);
-		$("#totalCompleted").append('</div>');
+		// $("#totalCompleted").append(completedHtml);
+		// $("#totalCompleted").append('</div>');
 	},
 
 	//function that hides/removes login/registration buttons
@@ -195,49 +195,25 @@ var ftdl = {
 	appendList: function(todoInfo, id, timed) {
 
 		var $todoDiv = $('<div>').addClass('todoDiv').attr("id", id);
-
 		var $name = $('<h4>').addClass('left');
-
-		var $img1 = $('<img>').attr({ 'src': 'assets/images/timed_event.jpg', 'title': 'Timed Events' })
-			.addClass('link-icon');
-
-		var $img2 = $('<img>').attr({
-				'src': 'assets/images/location.png',
-				'data-toggle': 'modal',
-				'data-target': '#mapModal',
-				'title': 'Map'
-			})
-			.addClass('link-icon');
-
-		var $img3 = $('<img>').attr({ 'src': 'assets/images/check.png', 'todoID': id, 'title': 'Mark as completed' })
-			.addClass('link-icon completeTodo');
-
-		var $img4 = $('<img>').attr({ 'src': 'assets/images/delete.png', 'todoID': id, 'title': 'Delete item' })
-			.addClass('link-icon closeTodo');
-
-		var $img5 = $('<img>').attr({ 'src': 'assets/images/notes.png', 'todoID': id, 'data-toggle': 'modal', 'data-target': '#noteModal', 'title': 'Notes' })
-			.addClass('link-icon noteTodo')
-
+		var $timedImage = $('<img>').attr({ 'src': 'assets/images/timed_event.jpg', 'title': 'Timed Events' }).addClass('link-icon');
+		var $locationImage = $('<img>').attr({'src': 'assets/images/location.png','data-toggle': 'modal','data-target': '#mapModal','title': 'Map'}).addClass('link-icon');
+		var $checkImage = $('<img>').attr({ 'src': 'assets/images/check.png', 'todoID': id, 'title': 'Mark as completed' }).addClass('link-icon completeTodo');
+		var $deleteImage = $('<img>').attr({ 'src': 'assets/images/delete.png', 'todoID': id, 'title': 'Delete item' }).addClass('link-icon closeTodo');
+		var $notesImage = $('<img>').attr({ 'src': 'assets/images/notes.png', 'todoID': id, 'data-toggle': 'modal', 'data-target': '#noteModal', 'title': 'Notes' }).addClass('link-icon noteTodo')
 		var $span = $('<span>').text(todoInfo.Name);
-
 		if (todoInfo.Categories != 'Timed Event') {
-			$img1.addClass('hide');
+			$timedImage.addClass('hide');
 		}
-
-		$name.append($img1, $img2, $img3, $img4, $img5, $span);
-
+		$name.append($timedImage, $locationImage, $checkImage, $deleteImage, $notesImage, $span);
 		var $description = $('<p>').addClass('clear').text('Description: ' + todoInfo.Description);
-
 		$todoDiv.append($name, $description);
-
 		if (timed === true) {
 			$(".timedEvents").append($todoDiv);
 		}
-
 		if (timed === false) {
 			$(".todoList").append($todoDiv);
 		}
-
 	},
 
 	appendComplete: function(completeInfo, id) {
@@ -248,7 +224,6 @@ var ftdl = {
 		completeDiv.append(name);
 		completeDiv.append(description);
 		$(".completedList").append(completeDiv);
-		// }
 	},
 
 	appendEvent: function(eventInfo, id) {
@@ -262,7 +237,6 @@ var ftdl = {
 		eventDiv.append(name);
 		eventDiv.append(description);
 		$(".future-items").append(eventDiv);
-		// }
 	},
 
 	deleteTodo: function() {
@@ -464,7 +438,6 @@ var ftdl = {
 	nextBackground: function() {
 		var body = $('body');
 		body.css("background-image", photoArray[currentPhoto = ++currentPhoto % photoArray.length]);
-		// setTimeout(this.nextBackground, 10000);
 	},
 
 	initMap: function() {
@@ -597,10 +570,11 @@ var ftdl = {
 	},
 
 	logOutReset: function() {
-		$(".completedList").empty();
-		$(".todoList").empty();
-		$('.future-items').empty();
-	},
+        $(".completedList").empty();
+        $(".todoList").empty();
+        $('.future-items').empty();
+        $('#header-members').empty();
+    },
 
 	getData: function() {
 		database.ref('/Users/' + firebase.auth().currentUser.uid + '/list').once('value', function(snapshot) {
@@ -619,6 +593,7 @@ var ftdl = {
 	}
 };
 
+//Running Functions
 $(".sortable").sortable({
 	stop: function(event, ui) {
 		ftdl.setTodoIndex();
@@ -679,7 +654,6 @@ $('#note-input').keypress(function(e) {
 		$('#btn-note').click();
 	}
 });
-
 
 //Map
 $('#mapModal').on('shown.bs.modal', function() { ftdl.initMap() });
